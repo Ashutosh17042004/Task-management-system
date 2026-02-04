@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  // Use the environment variable if it exists, otherwise fallback to local
+  // Vite automatically looks for VITE_API_URL in Vercel settings
   baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api/v1',
   headers: {
     'Content-Type': 'application/json',
@@ -12,7 +12,6 @@ const api = axios.create({
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
   if (token) {
-    // Note: Ensure your backend is configured to read 'x-auth-token'
     config.headers['x-auth-token'] = token;
   }
   return config;
